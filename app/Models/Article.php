@@ -2,12 +2,17 @@
 
 namespace App\Models;
 
+use App\Traits\HasAuthor;
+use App\Traits\ModelHelpers;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Testing\Fluent\Concerns\Has;
 
 class Article extends Model
 {
     use HasFactory;
+    use HasAuthor;
+    use ModelHelpers;
 
     const TABLE = 'articles';
 
