@@ -27,6 +27,7 @@ class RouteServiceProvider extends ServiceProvider
         RateLimiter::for('api', function (Request $request) {
             return Limit::perMinute(60)->by($request->user()?->id ?: $request->ip());
         });
+        //http:: //badger.test/api/v1/articles
 
         $this->routes(function () {
             Route::middleware('api')
@@ -35,6 +36,13 @@ class RouteServiceProvider extends ServiceProvider
 
             Route::middleware('web')
                 ->group(base_path('routes/web.php'));
+        });
+
+        //get articles either by id or by slug
+
+        Route::bind('/articles',function($value){
+            return \App\Models\Article::where('id',$value)
+            ->orWhere('slug',$value)->firstOrFail();
         });
     }
 }
